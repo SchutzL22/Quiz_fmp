@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz FMP</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="barra_superior">
+    <div class="barra_left">
+      <img src="Fmplogo.png" class="logo">
+    </div>
+    <div class="barra_centro">
+      <h1>Quiz sobre a FMP</h1>
+    </div>
+    <div class="barra_right">
+      <img src="Adslogo.png" class="logo">
+    </div>
+  </div>
+
+
+  <div class="container">
+    <h2 id="question">Carregando pergunta...</h2>
+    <div id="answers"></div>
+    <p id="progress"></p>
+  </div>
+
+  <script>
+const questions = [
+  {
+    tag: "FMP 2023/1 – Questão 40",
+    question: "A FMP, mantida com recursos da prefeitura de Palhoça, foi criada por uma Lei Municipal no ano de:",
+    options: ["2003", "2004", "2005", "2006", "2007"],
+    answer: 2 // 2005
+  },
+  {
+    tag: "FMP 2024/2 – Questão 40",
+    question: "A FMP enquanto instituição de ensino superior é mantida com recursos do (a):",
+    options: [
+      "estado de Santa Catarina",
+      "iniciativa privada",
+      "governo federal",
+      "câmara de vereadores de Palhoça",
+      "prefeitura de Palhoça"
+    ],
+    answer: 4 // prefeitura de Palhoça
+  },
+  {
+    question: "Em que ano a FMP foi inaugurada oficialmente?",
+    options: ["2004", "2005", "2006", "2007", "2008"],
+    answer: 2 // 2006
+  },
+  {
+    question: "Qual é o endereço do campus principal da FMP?",
+    options: [
+      "Avenida Central, 1000",
+      "Rua Prefeito Reinoldo Alves, 1550",
+      "Avenida das Palmeiras, 2000",
+      "Rua José Vieira, 3000",
+      "Rua João Pereira dos Santos, 99"
+    ],
+    answer: 4 // Rua João Pereira dos Santos, 99
+  },
+  {
+    question: "Quais cursos de bacharelado são oferecidos pela FMP?",
+    options: [
+      "Administração e Pedagogia",
+      "Medicina, Direito, Engenharia",
+      "Letras, Física, Matemática",
+      "Administração, Pedagogia, ADS e Processos Gerenciais",
+      "Ciências Contábeis, Economia, História"
+    ],
+    answer: 0 // Administração e Pedagogia
+  },
+  {
+    question: "Qual a duração, em semestres, do curso de Administração?",
+    options: ["4 semestres", "6 semestres", "8 semestres", "10 semestres", "12 semestres"],
+    answer: 2 // 8 semestres
+  },
+  {
+    question: "Qual a duração, em semestres, do curso de Pedagogia?",
+    options: ["4 semestres", "8 semestres", "6 semestres", "10 semestres", "12 semestres"],
+    answer: 1 // 8 semestres
+  },
+  {
+    question: "Qual a duração, em semestres, do curso de Análise e Desenvolvimento de Sistemas?",
+    options: ["4 semestres", "6 semestres", "8 semestres", "10 semestres", "5 semestres"],
+    answer: 4 // 5 semestres
+  },
+  {
+    question: "Qual a duração, em semestres, do curso de Processos Gerenciais?",
+    options: ["4 semestres", "6 semestres", "8 semestres", "10 semestres", "12 semestres"],
+    answer: 0 // 4 semestres
+},
+  {
+    question: "O que é a Empresa Júnior da FMP",
+    options: [
+      "Um projeto de pesquisa",
+      "Um núcleo empreendedor para alunos",
+      "Uma incubadora de startups",
+      "Uma ONG local",
+      "Um curso de extensão",
+    ],
+    answer: 1 // Um núcleo empreendedor para alunos
+  },
+  {
+    question: "Como a FMP atende pessoas estrangeiras?",
+    options: [
+      "Cursos de idiomas",
+      "Apoio jurídico",
+      "Bolsa para intercâmbio",
+      "Curso gratuito de português",
+      "Nenhuma dessas"
+    ],
+    answer: 3 // Curso gratuito de português
+  },
+  {
+    question: "Cite um evento promovido pela FMP recentemente.",
+    options: [
+      "Fórum do Empreendedor",
+      "Feira de Ciências",
+      "Semana Cultural",
+      "Hackathon Universitário",
+      "Palestra sobre educação",
+    ],
+    answer: 0 // Fórum do Empreendedor
+  },
+  {
+    question: "Quem coordena o curso de Pedagogia?",
+    options: [
+      "Alexandre Lisboa da Silva",
+      "Jackson Alexsandro Peres",
+      "Francini Scheid Martins",
+      "Gustavo Tanus Martins",
+      "Debora Schütz",
+    ],
+    answer: 1 // Jackson Alexsandro Peres
+  },
+  {
+    question: "Quem coordena o curso de Administração?",
+    options: [
+      "Jackson Peres",
+      "Gustavo Tanus",
+      "Alexandre Lisboa da Silva",
+      "Francini Scheid Martins",
+      "Fernanda de Matos Sanchez"
+    ],
+    answer: 2 // Alexandre Lisboa da Silva
+  },
+  {
+    question: "Quem coordena o curso de Processos Gerenciais?",
+    options: [
+      "Jackson Peres",
+      "Pedro Álvares Cabral",
+      "Alexandre Lisboa da Silva",
+      "Debora Schütz",
+      "Fernanda da Matos Sanchez"
+    ],
+    answer: 4 // Fernanda da Matos Sanchez
+  },
+  {
+    question: "Quem coordena o curso de Análise e Desenvolvimento de Sistemas?",
+    options: [
+      "Simone Regina da Silva",
+      "Davi Brito",
+      "Francini Scheid Martins",
+      "Debora Schütz",
+      "Fernanda da Matos Sanchez"
+    ],
+    answer: 0 // Simone Regina da Silva
+  },
+  {
+    question: "Qual tecnólogo foi recentemente aprovado pelo MEC na FMP?",
+    options: [
+      "Gestão de Turismo",
+      "Processos Gerenciais",
+      "Recursos Humanos",
+      "Marketing",
+      "Análise de Sistemas"
+    ],
+    answer: 1 // Processos Gerenciais
+  },
+  {
+    question: "O que é o Programa da Maturidade da FMP?",
+    options: [
+      "Curso técnico para jovens",
+      "Extensão para aposentados",
+      "Programa para idosos acima de 50 anos",
+      "Treinamento para professores",
+      "Curso livre de idiomas"
+    ],
+    answer: 2 // Programa para idosos acima de 50 anos
+  },
+  {
+    question: "Desde quando o Programa da Maturidade existe?",
+    options: ["2005", "2007", "2010", "2012", "2015"],
+    answer: 1 // 2007
+  },
+  {
+    question: "O que é o iLAB da FMP?",
+    options: [
+      "Um curso de extensão",
+      "Um laboratório de idiomas",
+      "Um programa de pesquisa vinculado ao curso de Análise e Desenvolvimento de Sistemas",
+      "Um centro de esportes",
+      "Uma empresa júnior"
+    ],
+    answer: 2 // Um programa de pesquisa vinculado ao curso de Análise e Desenvolvimento de Sistemas
+  },
+  {
+    question: "Qual é o objetivo principal do iLAB?",
+    options: [
+      "Promover eventos culturais",
+      "Aproximar alunos do mercado com pesquisa e soluções digitais",
+      "Organizar intercâmbio",
+      "Ensinar Libras",
+      "Apoiar pós‑graduandos"
+    ],
+    answer: 1 // Aproximar alunos do mercado com pesquisa e soluções digitais
+  },
+  {
+    question: "Quais especializações de pós‑graduação são oferecidas pela FMP?",
+    options: [
+      "Gestão Escolar e Gestão Empresarial",
+      "Gestão Pública e Educação Infantil",
+      "Administração e Pedagogia",
+      "Análise de Sistemas e Turismo",
+      "Processos Gerenciais e Linguística"
+    ],
+    answer: 0 // Gestão Escolar e Gestão Empresarial
+  },
+  {
+    question: "Qual a duração dos cursos de pós‑graduação?",
+    options: ["6 meses", "9 meses", "1 ano", "18 meses", "2 anos"],
+    answer: 2 // 1 ano
+  },
+  {
+    question: "Quem é a Diretora Executiva da FMP?",
+    options: [
+      "Mariah Terezinha Nascimento Pereira",
+      "Débora Raquel Schütz",
+      "Jair Joaquim Pereira",
+      "Fabiana Elisa Boff",
+      "Fábio Henrique Pereira"
+    ],
+    answer: 1 // Débora Raquel Schütz
+  },
+  {
+    question: "Qual país não faz parte das parcerias de intercâmbio?",
+    options: ["Cuba", "Uruguai", "Guiné-Bissau", "Portugal", "Argentina"],
+    answer: 4 // Argentina
+  },
+  {
+    question: "O que é a CPA na FMP?",
+    options: [
+      "Associação de ex-alunos",
+      "Comissão interna de avaliação institucional, com discentes, docentes, técnicos e sociedade civil",
+      "Centro de processos administrativos",
+      "Núcleo de apoio psicológico",
+      "Diretoria de cursos"
+    ],
+    answer: 1 // Comissão interna de avaliação institucional, com discentes, docentes, técnicos e sociedade civil
+  },
+  {
+    question: "Como os estudantes podem participar da CPA?",
+    options: [
+      "Via convite apenas",
+      "Contribuindo financeiramente",
+      "Através de entrevistas presenciais",
+      "Respondendo formulários semestrais",
+      "Apoiando eventos"
+    ],
+    answer: 3 // Respondendo formulários semestrais
+  },
+  {
+    question: "O que é o NULE?",
+    options: [
+      "Núcleo de Línguas em Extensão para comunidade",
+      "Núcleo de Estudos Urbanos",
+      "Um clube de línguas online",
+      "Laboratório de informática",
+      "Empresa Júnior de línguas"
+    ],
+    answer: 0 // Núcleo de Línguas em Extensão para comunidade
+  },
+  {
+    question: "Quais línguas são oferecidas no NULE?",
+    options: [
+      "Inglês básico e avançado",
+      "Espanhol básico e intermediário e Português para Estrangeiros",
+      "Francês e Alemão",
+      "Italiano e Japonês",
+      "Libras apenas"
+    ],
+    answer: 1 // Espanhol básico e intermediário e Português para Estrangeiros
+  },
+  {
+    question: "Qual curso foi incorporado ao NULE a partir de 2017?",
+    options: ["Italiano", "Informática", "Libras", "Francês", "Alemão"],
+    answer: 2 // Libras
+  },
+  {
+    question: "Qual é a principal função do Núcleo de Relações Internacionais (NURI) da FMP?",
+    options: [
+      "Proporcionar experiências culturais para estudantes estrangeiros",
+      "Facilitar a inserção de alunos em cursos de idiomas",
+      "Estabelecer parcerias internacionais e promover intercâmbio para alunos e professores",
+      "Oferecer aulas de inglês e espanhol para a comunidade",
+      "Criar programas de pesquisa internacional"
+    ],
+    answer: 2 // Estabelecer parcerias internacionais e promover intercâmbio para alunos e professores
+  },
+  {
+    question: "Quais países estão incluídos nas parcerias de intercâmbio da FMP?",
+    options: [
+      "Brasil, França, Alemanha",
+      "Cuba, Guiné-Bissau, Portugal e Uruguai",
+      "Argentina, Itália, Chile",
+      "Japão, Estados Unidos, Canadá",
+      "China, Austrália, Coreia do Sul"
+    ],
+    answer: 1 // Cuba, Guiné-Bissau, Portugal e Uruguai
+  },
+  {
+    question: "Qual iniciativa o NURI promove para alunos estrangeiros?",
+    options: [
+      "Bolsas de estudo integrais para cursos de pós-graduação",
+      "Cursos de Português como Língua Estrangeira",
+      "Aulas específicas de espanhol básico e intermediário",
+      "Participação gratuita em eventos acadêmicos",
+      "Cursos preparatórios para o mercado de trabalho"
+    ],
+    answer: 1 // Cursos de Português como Língua Estrangeira
+  },
+  {
+    question: "Quem é responsável pelas negociações de intercâmbio na FMP?",
+    options: [
+      "Diretoria Acadêmica",
+      "Núcleo de Línguas",
+      "Núcleo de Relações Internacionais (NURI)",
+      "Empresa Júnior",
+      "Diretoria de Extensão Universitária"
+    ],
+    answer: 2 // Núcleo de Relações Internacionais (NURI)
+  },
+  {
+    question: "Qual é o principal objetivo da Empresa Júnior da FMP?",
+    options: [
+      "Realizar eventos culturais e esportivos no campus",
+      "Oferecer consultorias feitas por estudantes para empresas da região",
+      "Desenvolver projetos científicos na área de tecnologia",
+      "Gerir estágios remunerados para alunos de Administração",
+      "Criar startups em parceria com grandes empresas"
+    ],
+    answer: 1 // Oferecer consultorias feitas por estudantes para empresas da região
+  },
+  {
+    question: "Quem é responsável pela gestão da Empresa Júnior da FMP?",
+    options: [
+      "Professores e coordenadores do curso de Administração",
+      "Estudantes de todos os cursos da FMP",
+      "Graduandos de Administração da FMP",
+      "Ex-alunos da FMP",
+      "Uma equipe mista de docentes e alunos"
+    ],
+    answer: 2 // Graduandos de Administração da FMP
+  },
+  {
+    question: "Qual é a missão da Empresa Júnior da FMP?",
+    options: [
+      "Ser uma incubadora de startups na região de Palhoça",
+      "Contribuir para o desenvolvimento sustentável por meio de eventos regionais",
+      "Transformar desafios empresariais em aprendizado prático para estudantes",
+      "Promover intercâmbio internacional para alunos da FMP",
+      "Ensinar habilidades técnicas para jovens empreendedores"
+    ],
+    answer: 2 // Transformar desafios empresariais em aprendizado prático para estudantes
+  },
+  {
+    question: "Qual é o principal objetivo do Curso de Formação de Cuidador de Idosos da FMP?",
+    options: [
+      "Promover a inserção de idosos no mercado de trabalho",
+      "Capacitar cuidadores para oferecer um atendimento humanizado e qualificado aos idosos",
+      "Focar na construção de espaços arquitetônicos inclusivos",
+      "Ensinar estratégias de marketing voltadas para o público idoso",
+      "Oferecer suporte jurídico para questões relacionadas ao envelhecimento"
+    ],
+    answer: 1 // Capacitar cuidadores para oferecer um atendimento humanizado e qualificado aos idosos
+  },
+  {
+    question: "Qual o principal objetivo do Curso de Inclusão Digital?",
+    options: [
+      "Preparar professores para atuação no exterior",
+      "Ensinar programação avançada",
+      "Promover alfabetização digital para a comunidade",
+      "Formar analistas de TI",
+      "Preparar documentos acadêmicos"
+    ],
+    answer: 2 // Promover alfabetização digital para a comunidade
+  },
+  {
+    question: "Qual é o principal objetivo do curso de Marketing Digital na Prática da FMP?",
+    options: [
+      "Ensinar estratégias de marketing tradicional",
+      "Capacitar os participantes no uso de ferramentas digitais para atrair, engajar e fidelizar clientes",
+      "Focar exclusivamente em redes sociais e e-commerce",
+      "Preparar alunos para o mercado de gestão empresarial",
+      "Promover o uso de design gráfico como ferramenta principal de marketing"
+    ],
+    answer: 1 // Capacitar os participantes no uso de ferramentas digitais para atrair, engajar e fidelizar clientes
+  }
+];
+
+
+    let currentQuestion = 0;
+    let correctAnswers = 0;
+    const startTime = Date.now();
+
+    function showQuestion() {
+      if (currentQuestion >= questions.length) {
+        const totalTime = Math.floor((Date.now() - startTime) / 1000);
+        localStorage.setItem("score", correctAnswers);
+        localStorage.setItem("total", questions.length);
+        localStorage.setItem("time", totalTime);
+        window.location.href = "resultado.html";
+        return;
+      }
+
+      const q = questions[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      const answersDiv = document.getElementById("answers");
+      answersDiv.innerHTML = "";
+
+      q.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = option;
+        btn.onclick = () => {
+          if (index === q.answer) correctAnswers++;
+          currentQuestion++;
+          showQuestion();
+        };
+        answersDiv.appendChild(btn);
+      }); 
+
+      if (q.tag) {
+        const tag = document.createElement("div");
+        tag.className = "tag";
+        tag.textContent = q.tag;
+        answersDiv.appendChild(tag);
+      }
+
+      document.getElementById("progress").textContent = `Pergunta ${currentQuestion + 1} de ${questions.length}`;
+    }
+
+    showQuestion();
+  </script>
+
+    <div class="barra_inferior">
+    <div class="barra_texto">
+      <p>Este quiz foi desenvolvido por <a href="www.linkedin.com/in/devlucasschutz" target="_blank" style="text-decoration: none; color: #00ffd5;">Lucas Schutz</a>.</p>
+    </div>
+  </div>
+
+</body>
+</html>
